@@ -1,18 +1,26 @@
 var http = require('http'); // Require http module
 var fs = require('fs')
 
-http.createServer( function(request, response){
-    console.log('Request made')
+var server = http.createServer();
+
+server.on('request', function(request, response){
     response.writeHead(200, {
         'Content-Type': 'text/html'
     })
-    fs.readFile('index.html', function(err, contents){
-        console.log("Displaying request")
+    fs.readFile('index.html', function (err, contents) {
         response.write(contents)
         response.end()
     })
+})
 
-    
-}).listen(8080); // Listen for connectino on 8080
+server.on('request', function(request, response){
+    console.log('New request coming in ...')
+})
+
+server.on('close', function(){
+    console.log('Closing down server...')
+})
+
+server.listen(8080); // Listen for connectino on 8080
 
 console.log('Listening on port 8080 ...');
