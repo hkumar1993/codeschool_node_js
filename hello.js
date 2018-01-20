@@ -1,18 +1,18 @@
 var http = require('http'); // Require http module
+var fs = require('fs')
 
 http.createServer( function(request, response){
-    response.writeHead(200); // Code status code
-    // response.write("Hello, this is dog."); // Response
-    response.write("Dog is running\n"); // Response
-    // console.log("Dog is running\n"); // Response
-    
-    setTimeout(function(){
-        response.write("Dog is done.\n");
-        // console.log("Dog is done\n"); // Response
+    console.log('Request made')
+    response.writeHead(200, {
+        'Content-Type': 'text/html'
+    })
+    fs.readFile('index.html', function(err, contents){
+        console.log("Displaying request")
+        response.write(contents)
         response.end()
-    }, 5000)
+    })
 
-    // response.end(); // Close connection
+    
 }).listen(8080); // Listen for connectino on 8080
 
 console.log('Listening on port 8080 ...');
